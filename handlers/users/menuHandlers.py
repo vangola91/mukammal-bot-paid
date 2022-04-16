@@ -1,9 +1,7 @@
 import logging
 from loader import dp
 from aiogram.types import Message, CallbackQuery
-from keyboards.inline.productsKeyboard import categoryMenu, productMenu, booksMenu
-
-
+from keyboards.inline.productsKeyboard import categoryMenu, productMenu, booksMenu, vagonkaMenu
 
 
 @dp.message_handler(text_contains="Mahsulotlar")
@@ -19,6 +17,15 @@ async def buy_reka(call: CallbackQuery):
     await call.message.answer("Reka Turin Tanlang", reply_markup=productMenu)
     await call.answer(cache_time=60)
 
+
+@dp.callback_query_handler(text="vagonka")
+async def buy_reka(call: CallbackQuery):
+    callback_data = call.data
+    logging.info(f"{callback_data=}")
+    logging.info(f"{call.from_user.username=}")
+    await call.message.delete()
+    await call.message.answer("Vagonka turin tanlang", reply_markup=vagonkaMenu)
+    await call.answer(cache_time=60)
 
 @dp.callback_query_handler(text_contains="books")
 async def buy_book(call: CallbackQuery):

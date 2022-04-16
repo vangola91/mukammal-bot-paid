@@ -4,4 +4,7 @@ from . import menuHandlers
 from . import info
 from . import location_handler
 from . import contact_handler
+from . import inlineHandler
+from . import admin
+from . import update_db
 from . import echo

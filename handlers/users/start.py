@@ -1,13 +1,14 @@
 import logging
-from data.config import CHANNELS
-from aiogram import types
-from keyboards.inline.subscription import check_button
+#import sqlite3
+import asyncpg.exceptions
 
+from data.config import ADMINS
+from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 
 from keyboards.default.startMenuKeyboard import menuStart
-from loader import dp, bot
-from utils.misc import subscription
+from loader import dp, db, bot
+#from utils.misc import subscription
 
 #kanlaga obuna tekshirish
 # @dp.message_handler(commands=["start"])
@@ -43,11 +44,32 @@ from utils.misc import subscription
 
 
 
+#Sqlift bazasiz bialn ishlash
+# @dp.message_handler(CommandStart())
+# async def bot_start(message: types.Message):
+#     name = message.from_user.full_name
+#     # Userni bazaga qoshamiza
+#     try:
+#         db.add_user(id=message.from_user.id,
+#                     name=name)
+#     except sqlite3.IntegrityError as err:
+#         await bot.send_message(chat_id=ADMINS[0], text=err)
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
-    #logging.info(message)
-    logging.info(f"{message.from_user.id=}")
-    logging.info(f"{message.from_user.full_name=}")
-    await message.answer(f"Salom, {message.from_user.full_name}!", reply_markup=menuStart)
+
+    try:
+        user =db.add_user(telegram_id==message.from_user.id,
+                          full_name=message.from_user.full_name,
+                          username=message.from_user.username)
+    except asyncpg.exceptions.UniqueViolationError:
+        user = await dp.select_user()
+        await bot.send_message(chat_id=ADMINS[0], text=err)
+
+
+
+    await message.answer(f"Asalom Alekum \n Xush kelibsiz, {message.from_user.full_name}!", reply_markup=menuStart)
+    count = db.count_users()[0]
+    msg = f"{message.from_user.full_name} bazaga qoshildi. \nBazada {count} ta foydalanuvchi bor."
+    await bot.send_message(chat_id=ADMINS[0], text=msg)
 

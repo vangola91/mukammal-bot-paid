@@ -1,5 +1,5 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from keyboards.inline.callback_data import tavar_callback, book_callback
+from keyboards.inline.callback_data import tavar_callback, book_callback, vagonka_callback
 
 categoryMenu = InlineKeyboardMarkup(
     inline_keyboard=[
@@ -12,6 +12,7 @@ categoryMenu = InlineKeyboardMarkup(
         ],
     ],
 )
+#Reka Menusi
 productMenu = InlineKeyboardMarkup(row_width=1)
 
 tavriko = InlineKeyboardButton(text="Таврико", callback_data=tavar_callback.new(item_name="tavriko"))
@@ -20,12 +21,27 @@ productMenu.insert(tavriko)
 brus = InlineKeyboardButton(text="Брус", callback_data=tavar_callback.new(item_name="brus"))
 productMenu.insert(brus)
 
-
 back_button = InlineKeyboardButton(text="Ortga", callback_data="cancel")
 productMenu.insert(back_button)
 
+#Vagonka Menusi
+vagonkaMenu = InlineKeyboardMarkup(row_width=1)
+
+asina = InlineKeyboardButton(text="Осина", callback_data=vagonka_callback.new(item_name="asina"))
+vagonkaMenu.insert(asina)
+
+sasna = InlineKeyboardButton(text="Сасна", callback_data=vagonka_callback.new(item_name="sasna"))
+vagonkaMenu.insert(sasna)
+
+beroza = InlineKeyboardButton(text="Бероза", callback_data=vagonka_callback.new(item_name="beroza"))
+vagonkaMenu.insert(beroza)
+
+back_button = InlineKeyboardButton(text="Ortga", callback_data="cancel")
+vagonkaMenu.insert(back_button)
+
+#Kitoblar kinopkasni avtamatik qoshish funksyisasi
 bookss = {
-    "Таврико. Mamayov  ": "tavriko",
+    "Taxta. ": "tavriko",
     "Брус.": "brus",
     "guli rekalar": "gul",
 
